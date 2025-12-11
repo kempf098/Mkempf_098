@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | Interactive Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        :root {
+            --primary-color: #87AE73;
+            --accent-color: #9CAF88;
+            --text-color: #5A6B52;
+            --background-color: #F4F7F2;
+            --card-background: rgba(255, 255, 255, 0.98);
+            --secondary-accent: #A8C09A;
+            --tertiary-accent: #7A9A6A;
+            --nav-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Sidebar adjustments for index page */
+        .sidebar {
+            z-index: 999;
+        }
+
+        main {
+            margin-left: 250px;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                margin-left: 0;
+            }
+        }
+
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--accent-color), var(--tertiary-accent), var(--secondary-accent), #D4E4CC);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .welcome-card {
+            background: var(--card-background);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 2rem;
+            display: block;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* About Me Section Styles */
+        .about-section {
+            padding: 5rem 0;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-main-image {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .about-main-image img {
+            max-width: 500px;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+
+        .about-main-image:hover img {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-text {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-image-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            aspect-ratio: 4/3;
+        }
+
+        .about-image-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .about-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image-first img {
+            object-position: center 30%;
+        }
+
+        .about-image-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .video-section {
+            padding: 5rem 0;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .video-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            display: inline-block;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .video-wrapper:hover video {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .about-images {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .about-text p {
+                font-size: 1rem;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transform: scale(1);
+        }
+
+        .primary-button {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .welcome-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* Project Styles */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-overlay h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-overlay p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background: var(--background-color);
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+            max-width: 600px;
+            width: 90%;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--card-background);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            --primary-color: #A8C09A;
+            --text-color: #E8EDE4;
+            --background-color: #2B3A26;
+            --card-background: rgba(107, 138, 92, 0.95);
+            --accent-color: #9CAF88;
+            --secondary-accent: #87AE73;
+            --tertiary-accent: #7A9A6A;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="site-title">Matthew Kempf</div>
+            <p class="site-subtitle">Portfolio</p>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="career.html" class="nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        Career
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="discover.html" class="nav-link">
+                        <i class="fas fa-compass"></i>
+                        Discover
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="hobbies.html" class="nav-link">
+                        <i class="fas fa-heart"></i>
+                        Hobbies
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="game.html" class="nav-link">
+                        <i class="fas fa-gamepad"></i>
+                        Memory Game
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="resume.html" class="nav-link">
+                        <i class="fas fa-file-alt"></i>
+                        Resume
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="background-animation"></div>
+    
+    <main>
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="welcome-card" data-aos="fade-up">
+                <img src="images/42436 (1).jpg" alt="Matthew Kempf" class="profile-image" data-aos="zoom-in" data-aos-delay="100">
+                <h1>Welcome to my website</h1>
+                <p class="subtitle" data-aos="fade-up" data-aos-delay="200">Experience a journey through innovation and design</p>
+                
+                <div class="cta-buttons" data-aos="fade-up" data-aos-delay="400">
+                    <button class="button primary-button" onclick="showModal('contact')">
+                        <i class="fas fa-rocket"></i> Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">About Me</h2>
+            <div class="about-content" data-aos="fade-up" data-aos-delay="200">
+                <div class="about-main-image" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="images/IMG_4203.JPG" alt="About Me">
+                </div>
+                <div class="about-text">
+                    <p>Welcome to my personal portfolio! I'm passionate about technology, sports, and continuous learning. Through this website, you can explore my career aspirations, discover my interests, and learn more about what drives me.</p>
+                    <p>I enjoy staying active through running, basketball, and football, and I'm always looking for new opportunities to grow both personally and professionally.</p>
+                </div>
+                <div class="about-images">
+                    <div class="about-image-item about-image-first" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="images/IMG_2945.jpg" alt="About Me">
+                    </div>
+                    <div class="about-image-item" data-aos="zoom-in" data-aos-delay="400">
+                        <img src="images/IMG_9018.JPG" alt="About Me">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="video" class="video-section">
+        <div class="container">
+            <div class="video-container" data-aos="fade-up">
+                <div class="video-wrapper">
+                    <video controls>
+                        <source src="images/IMG_9041.mov" type="video/mp4">
+                        <source src="images/IMG_9041.mov" type="video/quicktime">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
+            <div class="contact-content">
+                <form class="contact-form" data-aos="fade-right">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" class="form-input"></textarea>
+                    </div>
+                    <button type="submit" class="button primary-button">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links" data-aos="fade-up">
+                <a href="#" class="social-link" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <p class="copyright">© 2025 All Rights Reserved</p>
+        </div>
+    </footer>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Typing effect
+        function typeText() {
+            const text = "Creative Space";
+            const element = document.querySelector('.typing-text');
+            let index = 0;
+
+            function type() {
+                if (index < text.length) {
+                    element.textContent = text.slice(0, index + 1);
+                    index++;
+                    setTimeout(type, 100);
+                }
+            }
+
+            type();
+        }
+
+        // Modal functionality
+        function showModal(content) {
+            const modal = document.getElementById('modal');
+            const modalBody = modal.querySelector('.modal-body');
+            
+            let modalContent = '';
+            if (content === 'projects') {
+                modalContent = `
+                    <h2>My Portfolio</h2>
+                    <div class="project-grid">
+                        <div class="project-card">
+                            <h3>Project Details Coming Soon</h3>
+                            <p>Stay tuned for exciting updates!</p>
+                        </div>
+                    </div>
+                `;
+            } else if (content === 'contact') {
+                modalContent = `
+                    <h2>Let's Connect!</h2>
+                    <form class="contact-form">
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message" required></textarea>
+                        <button type="submit" class="button primary-button">Send</button>
+                    </form>
+                `;
+            }
+
+            modalBody.innerHTML = modalContent;
+            modal.style.display = 'flex';
+            
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        // Close modal
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        });
+
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('modal');
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
+        });
+
+        // Add active class to current page in navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
